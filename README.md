@@ -20,10 +20,9 @@ Right now, sample data is included (`OsuSongData.json`, `allowed_sets.txt`) but 
 ### Data files
 
 * `OsuSongData.json`
-    -> full pool (Ranked and Loved, standard only).
+    -> Pre Genned Pool (Ranked and Loved, standard only)
 * `allowed_sets.txt`
-    -> Fully pool turned into allowed_set.txt
-
+    -> converted Pool
 ---
 
 ## How to use
