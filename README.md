@@ -13,9 +13,9 @@ Right now, sample data is included (`OsuSongData.json`, `allowed_sets.txt`) but 
 * `build_pool.py`
     -> Builds a custom `OsuSongData.json` used by the osu Archipelago
 * `extractor.py` 
-    -> reads `OsuSongData.json` and turns it into a plain text file where very line is a beatmapset
+    -> reads `OsuSongData.json` and turns it into a plain text file where every line is a beatmapset
 * `gui.py`
-    -> produces final include_songs List
+    -> produces final include_songs List with filters
 
 ### Data files
 
