@@ -2,11 +2,6 @@
 import json, sys, os
 
 def collect_ids(obj, out):
-    """
-    Recursively walk any nested structure and collect values under 'id'
-    for items that look like beatmapsets (dicts that have 'beatmaps' or
-    'artist'/'title' keys). This makes us robust to odd shapes.
-    """
     if isinstance(obj, dict):
         # If this dict looks like a beatmapset, take its 'id'
         if "id" in obj and (
