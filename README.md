@@ -1,6 +1,6 @@
 # osuAPWorldPrivate
 
-Different Version with Tools For Osu Archipelago
+Tools for Creating a Osu APWorld with custom Song Data \
 This is a **private** toolset for making a custom osu! Archipelago.
 Reason: the official pool only includes Featured Artists. This lets you build your own pool (Ranked + Loved) and create a `include_songs` lists with more custom speficiations (artist, mapper tag, user tag, etc).
 
