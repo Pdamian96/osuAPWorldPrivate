@@ -122,13 +122,13 @@ py gui.py
 ---
 
 ## Troubleshooting
-**It wont Generate**
+**It wont Generate**:
 Make sure that the person generating has the .apworld you made the include_song list for
 
-**Picker returns empty**
+**Picker returns empty**:
 Filters not broad enough or allowlist too small. Increase Page by a lot, relax filters,
 
-**Custom world won’t load**
+**Custom world won’t load**:
 If using a ".apworld", the zip root needs to be:
 
 ```
@@ -137,7 +137,7 @@ worlds/osu/__init__.py
 
 Not "osu/" at root, not files at root. Keep filename lowercase: "osu.apworld"
 
-**Sleep Limit**
+**Sleep Limit**:
 Default builder pace is ~55 rpm and capped at 60. If you still see 429s, increase "--sleep"
 
 ---
