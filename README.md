@@ -138,6 +138,6 @@ worlds/osu/__init__.py
 Not "osu/" at root, not files at root. Keep filename lowercase: "osu.apworld"
 
 **Sleep Limit**:
-Default builder pace is ~55 rpm and capped at 60. If you still see 429s, increase "--sleep"
+Default builder is faster than the 60rpm recommended limit. If you still see 429s, increase "--sleep"
 
 ---
