@@ -50,7 +50,7 @@ py -m pip install requests
 
 **What it does**
 
-* Pages `/api/v2/beatmapsets/search` for Ranked + Loved.
+* Pages `/api/v2/beatmapsets/search`
 * Hardcoded to always do Ranked + Loved and only STD right now. If wanted I may make it useable for the other modes and statuses
 
 **How to run**
