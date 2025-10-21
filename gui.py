@@ -478,7 +478,7 @@ class App(ttk.Frame):
             client_id = self.client_id_var.get().strip()
             client_secret = self.client_secret_var.get().strip()
             if not client_id or not client_secret:
-                raise RuntimeError("Enter your osu! Client ID and Client Secret.")
+                raise RuntimeError("Enter your osu! Client ID and Client Secret")
 
             count = int(self.count_var.get())
             min_len = as_int(self.minlen_var.get())
@@ -503,7 +503,7 @@ class App(ttk.Frame):
             if self.mode_fruits.get(): allowed_modes.add("fruits")
             if self.mode_mania.get():  allowed_modes.add("mania")
             if not allowed_modes:
-                raise RuntimeError("Select at least one mode (osu/taiko/fruits/mania).")
+                raise RuntimeError("Select at least one mode (osu/taiko/fruits/mania)")
 
             if seed is not None:
                 random.seed(seed)
