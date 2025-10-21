@@ -160,6 +160,40 @@ class OsuWorld(World):
         for generic_song, osu_song in zip((self.starting_songs + self.additional_songs + ["Victory"]), song_data):
             self.pairs[generic_song] = osu_song
 
+
+        #Assign each song a mod based on mode
+
+        mode = int(self.options.mod_lock_mode.value)
+        allowed_raw = self.options.mod_lock_allowed.value
+        allowed = list(allowed_raw) if allowed_raw else []
+        pct = int(self.options.mod_lock_pct.value)
+
+        eligible_keys = [k for k in (self.starting_songs + self.additional_songs) if k in self.pairs]
+
+        locked_indices: list[int] = []
+
+        #all
+        if mode == 1 and allowed:
+        
+            locked_indices = list(range(len(eligible_keys)))
+        #pct
+        elif mode == 2 and allowed and len(eligible_keys) > 0 and pct > 0:
+            #
+            idxs = list(range(len(eligible_keys)))
+            self.random.shuffle(idxs)
+            k = max(0, min(len(idxs), (len(idxs) * pct) // 100))
+            locked_indices = idxs[:k]
+
+        
+        for i, key in enumerate(eligible_keys):
+            if i in locked_indices:
+                req_mod = self.random.choice(allowed)
+                self.pairs[key]["required_mods"] = [req_mod]
+            else:
+                self.pairs[key]["required_mods"] = []
+
+        #---
+
         for song in self.starting_songs:
             self.multiworld.push_precollected(self.create_item(song))
 

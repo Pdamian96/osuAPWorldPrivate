@@ -61,6 +61,7 @@ class APosuClientCommandProcessor(ClientCommandProcessor):
         os.environ['PLAYER_ID'] = player_id
         self.output(f"Set to {player_id}")
 
+
     def _cmd_save_keys(self):
         """Saves the player's current IDs"""
         filename = "config"
@@ -154,7 +155,10 @@ class APosuClientCommandProcessor(ClientCommandProcessor):
         for i in indexes:
             song = list(self.ctx.pairs.keys())[i]
             beatmapset = self.ctx.pairs[song]
-            self.output(f"{song}: {beatmapset['title']} (ID: {beatmapset['id']})")
+            req_mod = beatmapset.get("required_mods", []) or []
+            mod_part = f"[Mod: {', '.join(req_mod)}]" if req_mod else ""
+            self.output(f"{song}: {beatmapset['title']} {mod_part} (ID: {beatmapset['id']})")
+
 
     def _cmd_all_songs(self):
         """Displays all songs included in current generation."""
@@ -162,7 +166,9 @@ class APosuClientCommandProcessor(ClientCommandProcessor):
         self.output(f"You have played {len(played_songs)}/{len(self.ctx.pairs) - 1} songs")
         for song in self.ctx.pairs:
             beatmapset = self.ctx.pairs[song]
-            self.output(f"{song}: {beatmapset['title']} (ID: {beatmapset['id']}) "
+            req_mod = beatmapset.get("required_mods", []) or []
+            mod_part = f"  [Mod: {', '.join(req_mod)}]" if req_mod else ""
+            self.output(f"{song}: {beatmapset['title']} {mod_part} (ID: {beatmapset['id']}) "
                         f"{'(passed)' if song in played_songs else ''}")
 
     def _cmd_update(self, mode=''):
@@ -191,6 +197,7 @@ class APosuClientCommandProcessor(ClientCommandProcessor):
             self.output("Use the Song Numbers in '/songs' (Not the IDs)")
             return
         beatmapset = self.ctx.pairs[song]
+
         if self.ctx.download_type == 'mirror':
             self.output(f"Downloading {song}: {beatmapset['title']} (ID: {beatmapset['id']}) as "
                         f"'{beatmapset['id']} {beatmapset['artist']} - {beatmapset['title']}.osz'")
@@ -331,6 +338,15 @@ class APosuClientCommandProcessor(ClientCommandProcessor):
                             if score['ruleset_id'] != 0 and beatmap['mode'] == 'osu':
                                 self.output('Your settings do not allow converts')
                                 return
+                            
+                #Modlock stuff 
+                req = set(self.ctx.pairs[song].get('required_mods', []))
+                used = {m['acronym'] for m in score['mods']}
+                if req and not req.issubset(used):
+                    self.output(f"Missing required mods: {sorted(req)}")
+                    return   
+
+
                 if song == "Victory":
                     if count_item(self.ctx, osu_base_id - 1) >= self.ctx.preformance_points_needed:
                         message = [{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}]
@@ -841,6 +857,13 @@ def check_location(ctx, score):
                         if score['ruleset_id'] != 0 and beatmap['mode'] == 'osu':
                             print('Your settings do not allow converts')
                             return
+                        
+            req = set(ctx.pairs[song].get('required_mods', []))
+            used = {m['acronym'] for m in score['mods']}
+            if req and not req.issubset(used):
+                print(f"Missing required mods: {sorted(req)}")
+                return
+            
             if song == "Victory":
                 if count_item(ctx, 726999999) >= ctx.preformance_points_needed:
                     asyncio.create_task(ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}]))

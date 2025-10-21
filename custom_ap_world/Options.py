@@ -3,6 +3,38 @@ from dataclasses import dataclass
 from .Items import get_song_data
 
 
+
+
+# testing new suff for now
+#mod requirements
+
+class ModLockMode(Choice):
+    """When on, attach some required mods to songs. 
+    - Off = none have requirements
+    - All = every Song
+    - Pct = a Percentage of Mods require Mods
+    """
+    display_name = """Mod Lock Mode"""
+    option_off = 0
+    option_all = 1
+    option_pct = 2
+    default = 0
+
+
+class ModLockAllowed(OptionSet):
+    """Which Mods can be required when Mod Lock is active"""
+    display_name = "Allowed Mods for Mod Lock"
+    valid_keys = {"HD","HR","DT","HT","EZ"}
+
+class ModLockPct(Range):
+    display_name = "Percentage of Mods that require a mod"
+    range_start = 0
+    range_end = 100
+    default = 30
+
+
+
+
 class StartingSongs(Range):
     """The number of songs that will be automatically unlocked at the start of a run."""
     range_start = 3
@@ -283,6 +315,11 @@ class OsuOptions(PerGameCommonOptions):
     additional_songs: AdditionalSongs
     additional_item_percentage: AdditionalItemPercentage
     disable_difficulty_reduction: DisableDifficultyReduction
+
+    mod_lock_mode: ModLockMode
+    mod_lock_allowed: ModLockAllowed
+    mod_lock_pct: ModLockPct
+
     minimum_grade: MinimumGrade
     difficulty_sync: DifficultySync
     disallow_converts: DisallowConverts
