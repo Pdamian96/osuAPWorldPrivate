@@ -140,3 +140,8 @@ Not "osu/" at root, not files at root. Keep filename lowercase: "osu.apworld"
 Default builder is faster than the 60rpm recommended limit. If you still see 429s, increase "--sleep"
 
 ---
+
+
+## Custom AP World
+
+This Repo also includes a custom AP based on the original Osu APWorld. It currently adds mod multipliers (so some maps need to be played with HR, HD etc)
