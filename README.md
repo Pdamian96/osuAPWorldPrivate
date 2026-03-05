@@ -122,7 +122,7 @@ py gui.py
 
 ## Troubleshooting
 **It wont Generate**:
-Make sure that the person generating has the .apworld you made the include_song list for
+Make sure that the person generating the APworld has the .apworld you made the include_song list for
 
 **Picker returns empty**:
 Filters not broad enough or allowlist too small. Increase Page by a lot, relax filters,
