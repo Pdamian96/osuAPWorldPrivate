@@ -29,7 +29,7 @@ Right now, sample data is included (`OsuSongData.json`, `allowed_sets.txt`) but 
 (only for Windows!)
 ### 0) Prereqs 
 
-* Python **3.13** recommended.
+* Python **3.13** recommended
 * Install requests:
 
 ```powershell
