@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from __future__ import annotations
 import json, os, random, sys, threading, time
 from typing import Iterable, List, Optional, Tuple, Set
@@ -212,9 +211,7 @@ class App(ttk.Frame):
         self.build_ui()
         self.bind_shortcuts()
 
-    # --- UI build -------------------------------------------------------------
     def build_ui(self):
-        # Credentials
         creds = ttk.LabelFrame(self, text="osu! OAuth")
         creds.grid(row=0, column=0, sticky="we")
         ttk.Label(creds, text="Client ID").grid(row=0, column=0, sticky="w")
@@ -225,7 +222,6 @@ class App(ttk.Frame):
         self.client_secret_var = tk.StringVar(value="")
         ttk.Entry(creds, textvariable=self.client_secret_var, width=36, show="•").grid(row=0, column=3, sticky="w", padx=(4,0))
 
-        # Picker basics
         g = ttk.LabelFrame(self, text="Picker")
         g.grid(row=1, column=0, sticky="nsew", padx=0, pady=(6,0))
 
@@ -270,7 +266,6 @@ class App(ttk.Frame):
         self.text_var = tk.StringVar(value="")
         ttk.Entry(g, textvariable=self.text_var, width=28).grid(row=6, column=1, columnspan=3, sticky="we")
 
-        # Modes
         modes = ttk.LabelFrame(self, text="Modes")
         modes.grid(row=2, column=0, sticky="we", pady=(6,0))
         self.mode_osu    = tk.BooleanVar(value=True)
@@ -282,7 +277,6 @@ class App(ttk.Frame):
         ttk.Checkbutton(modes, text="fruits (catch)",   variable=self.mode_fruits).grid(row=0, column=2, sticky="w")
         ttk.Checkbutton(modes, text="mania",            variable=self.mode_mania).grid(row=0, column=3, sticky="w")
 
-        # Advanced
         adv = ttk.LabelFrame(self, text="Advanced")
         adv.grid(row=3, column=0, sticky="we", pady=(6,0))
         ttk.Label(adv, text="Pages").grid(row=0, column=0, sticky="w")
@@ -302,7 +296,6 @@ class App(ttk.Frame):
         self.enforce_var = tk.BooleanVar(value=False)
         ttk.Checkbutton(adv, text="Enforce count", variable=self.enforce_var).grid(row=0, column=7, sticky="w")
 
-        # Allowlist
         allow = ttk.LabelFrame(self, text="Allowlist")
         allow.grid(row=4, column=0, sticky="we", pady=(6,0))
         self.allow_path = tk.StringVar(value="")
@@ -310,7 +303,6 @@ class App(ttk.Frame):
         ttk.Button(allow, text="Browse...", command=self.pick_allow).grid(row=0, column=1, padx=5)
         ttk.Label(allow, text="(txt: one set_id per line)").grid(row=0, column=2, sticky="w")
 
-        # Buttons
         btns = ttk.Frame(self)
         btns.grid(row=5, column=0, sticky="we", pady=(6,0))
         ttk.Button(btns, text="Pick Beatmaps", command=self.start_pick).grid(row=0, column=0, padx=(0,6))
@@ -318,7 +310,6 @@ class App(ttk.Frame):
         ttk.Button(btns, text="Load Settings...", command=self.load_settings).grid(row=0, column=2, padx=(0,6))
         ttk.Button(btns, text="Save Settings...", command=self.save_settings).grid(row=0, column=3)
 
-        # Output + Log
         io = ttk.PanedWindow(self, orient="vertical")
         io.grid(row=6, column=0, sticky="nsew", pady=(6,0))
         self.output = tk.Text(io, height=4, wrap="none")
@@ -326,7 +317,6 @@ class App(ttk.Frame):
         io.add(self.output)
         io.add(self.log)
 
-        # Resizing
         self.master.columnconfigure(0, weight=1)
         self.master.rowconfigure(6, weight=1)
         self.columnconfigure(0, weight=1)
@@ -366,7 +356,6 @@ class App(ttk.Frame):
         self.master.clipboard_append(txt)
         messagebox.showinfo("Copy Output", "Copied to clipboard")
 
-    # --- Settings (Save/Load) -------------------------------------------------
     def gather_settings(self) -> dict:
         modes = []
         if self.mode_osu.get():    modes.append("osu")
@@ -398,7 +387,6 @@ class App(ttk.Frame):
         }
 
     def apply_settings(self, cfg: dict):
-        # Strings / ints / floats
         self.client_id_var.set(str(cfg.get("client_id", self.client_id_var.get())))
         self.client_secret_var.set(str(cfg.get("client_secret", self.client_secret_var.get())))
 
@@ -472,7 +460,6 @@ class App(ttk.Frame):
         except Exception as e:
             messagebox.showerror("Load Settings", str(e))
 
-    # --- Picker core ----------------------------------------------------------
     def do_pick(self):
         try:
             client_id = self.client_id_var.get().strip()
