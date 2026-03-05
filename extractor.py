@@ -1,9 +1,7 @@
-#!/usr/bin/env python3
 import json, sys, os
 
 def collect_ids(obj, out):
     if isinstance(obj, dict):
-        # If this dict looks like a beatmapset, take its 'id'
         if "id" in obj and (
             "beatmaps" in obj or
             ("artist" in obj and "title" in obj) or
@@ -13,11 +11,9 @@ def collect_ids(obj, out):
                 out.add(int(obj["id"]))
             except Exception:
                 pass
-        # If it has a 'beatmapsets' key, scan that
         if "beatmapsets" in obj and isinstance(obj["beatmapsets"], (list, tuple)):
             for x in obj["beatmapsets"]:
                 collect_ids(x, out)
-        # Recurse all values
         for v in obj.values():
             collect_ids(v, out)
 
